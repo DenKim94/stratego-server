@@ -1,4 +1,4 @@
-# PRJ_StrategoWeb
+# stratego-server
 Developer: Denis Kim
 
 In this private full-stack side project, a multiplayer online game named 'Stratego' is being developed from scratch using the React library for the frontend and NodeJS (ExpressJS + Stream Chat API) for the backend. 
