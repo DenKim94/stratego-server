@@ -12,7 +12,7 @@ import { StreamChat } from 'stream-chat';
 
 dotenv.config();  
 // Get environment variables
-// const portNumber = parseInt(process.env.PORT_NUMBER,10); // To be adjusted for deployment
+const portNumber = process.env.PORT || 3001; 
 const apiKey = process.env.API_KEY; 
 const apiSecret = process.env.API_SECRET;
 
@@ -53,8 +53,8 @@ app.post("/setup", async (req, res) => {
 await getUsers();
 
 // Start the server
-app.listen(process.env.PORT || 3001, () => {
-    console.log(">> Server is running... ")
+app.listen(portNumber, () => {
+    console.log(` Server is running on port: ${portNumber} `)
 })
 
 // Function to clean up the user list
