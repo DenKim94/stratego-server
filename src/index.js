@@ -28,7 +28,7 @@ const serverClient = StreamChat.getInstance(apiKey, apiSecret);
 await deleteOldUsers()
 
 // Get data from the frontend and provide specific User-ID and token
-app.post("/setup", async (req, res) => {
+app.post("/setup", async (req, res) => { // URL to the front end has to be adjusted!
     try{
         const gameSets = req.body.gameStates;
         const {playerName, playerNumber} = gameSets;  // Parameters should be adapted to requirements
@@ -43,6 +43,7 @@ app.post("/setup", async (req, res) => {
                            playerNumber: playerNumber};     // Set User properties
 
         res.json({userProps, token})                        // Provide response as json-data
+        console.log(">> Request provided... ")
     }
     catch(error){
         console.error(error.message)
