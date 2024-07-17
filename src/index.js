@@ -28,10 +28,10 @@ const serverClient = StreamChat.getInstance(apiKey, apiSecret);
 await deleteOldUsers()
 
 // Get data from the frontend and provide specific User-ID and token
-app.post("/setup", async (req, res) => { // URL to the front end has to be adjusted!
+app.post("/setup", async (req, res) => {
     try{
         const gameSets = req.body.gameStates;
-        const {playerName, playerNumber} = gameSets;  // Parameters should be adapted to requirements
+        const {playerName, playerNumber} = gameSets;  
 
         if(!playerName || !playerNumber){
             console.error("Error: Incomplete request body!")
@@ -43,7 +43,7 @@ app.post("/setup", async (req, res) => { // URL to the front end has to be adjus
                            playerNumber: playerNumber};     // Set User properties
 
         res.json({userProps, token})                        // Provide response as json-data
-        console.log(">> Request provided... ")
+        console.log("Response provided... ")
     }
     catch(error){
         console.error(error.message)
