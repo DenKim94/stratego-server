@@ -6,7 +6,7 @@ import { StreamChat } from 'stream-chat';
 
 /*
 * Backend logic for running an backend-server via express and the stream-chat API
-* Date of last changes: 15.07.2024
+* Date of last changes: 15.10.2024
 * Developer: D.Kim
 */
 
@@ -58,22 +58,17 @@ app.listen(portNumber, () => {
     console.log(` Server is running on port: ${portNumber} `)
 })
 
-// Function to clean up the user list
-async function deleteOldUsers(){
-    console.log(">> Run user clean-up... ")
-    const response = await serverClient.queryUsers({});
-    let deletedUser = null;
-    try{    
-        response.users.forEach(async (props) => {        
-            if(props.id && !props.online && props.role === 'user'){
-                deletedUser = await serverClient.deleteUser(props.id)
-            }
-        })
+async function deleteOldUsers() {
+    try {
+      const response = await serverClient.queryUsers({});
+      const usersToDelete = response.users.filter((user) => !user.online && user.role === 'user');
+      await Promise.all(usersToDelete.map((user) => serverClient.deleteUser(user.id)));
+      console.log('User clean-up completed.');
+
+    } catch (error) {
+      console.error('Error at deleting old users:', error);
     }
-    catch(error){
-        console.error(error.message);
-    }
-}
+  }
 
 // Function to get current users
 async function getUsers(){
