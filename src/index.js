@@ -6,26 +6,42 @@ import { StreamChat } from 'stream-chat';
 
 /*
 * Backend logic for running an backend-server via express and the stream-chat API
-* Date of last changes: 15.10.2024
+* Date of last changes: 23.02.2025
 * Developer: D.Kim
 */
 
 dotenv.config();  
 // Get environment variables
-const portNumber = process.env.PORT || 3001; 
+const portNumber = process.env.PORT || 3002; 
 const apiKey = process.env.API_KEY; 
 const apiSecret = process.env.API_SECRET;
 
 // Create an express server to exchange data
 const app = express();
-app.use(cors());
-app.use(express.json());
+
+// Middleware: CORS-Configuration
+app.use(express.json()); 
+app.use(cors({
+  origin: process.env.URL_CLIENT,
+  methods: ['GET', 'POST'],
+}));
+
 
 // Create an instance to connect the account to the stream platform 
 const serverClient = StreamChat.getInstance(apiKey, apiSecret);
 
 // Clean-Up: Remove of old/offline users 
 await deleteOldUsers()
+
+// Server-Wakeup:  
+app.get("/wakeup", (_, res) => {
+    try{
+      res.json({ message: "RP5-Server [STRATEGO] ist aktiv." });
+  
+    }catch(error){
+      res.status(500).json({ error: "Serverfehler bei der Aktivierung." });
+    }
+  });
 
 // Get data from the frontend and provide specific User-ID and token
 app.post("/setup", async (req, res) => {
