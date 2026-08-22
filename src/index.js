@@ -10,7 +10,7 @@ import { StreamChat } from 'stream-chat';
 * Developer: D.Kim
 */
 
-dotenv.config();  
+dotenv.config({ quiet: true });   // quiet: unterdrückt den Werbe-/Tip-Log von dotenv >= 17
 // Get environment variables
 const portNumber = process.env.PORT || 3002; 
 const apiKey = process.env.API_KEY; 
