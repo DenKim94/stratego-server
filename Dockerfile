@@ -1,4 +1,4 @@
-FROM node:22.14.0 AS base
+FROM node:24.22.2 AS base
 
 WORKDIR /usr/src/stratego_server
 
